@@ -1,11 +1,11 @@
 #include "shell.h"
 
 /**
-* get_input - reads and proccesses input from user
-* @info: address of structure
-*
-* Return: length of the parsed input string
-*/
+ * get_input - reads and proccesses input from user
+ * @info: address of structure
+ *
+ * Return: length of the parsed input string
+ */
 ssize_t get_input(info_t *info)
 {
 	static char *buf;
@@ -16,31 +16,31 @@ ssize_t get_input(info_t *info)
 	_putchar(BUF_FLUSH);
 	r = input_buf(info, &buf, &len);
 	if (r == -1)
-	{
 		return (-1);
-	}
 	if (len)
 	{
 		j = i;
 		p = buf + i;
+
 		check_chain(info, buf, &j, i, len);
 		while (j < len)
 		{
 			if (is_chain(info, buf, &j))
-			{
 				break;
-			}
 			j++;
 		}
+
 		i = j + 1;
 		if (i >= len)
 		{
 			i = len = 0;
 			info->cmd_buf_type = CMD_NORM;
 		}
+
 		*buf_p = p;
 		return (_strlen(p));
 	}
+
 	*buf_p = buf;
 	return (r);
 }

@@ -11,11 +11,12 @@ int set_alias(info_t *info, char *str)
 {
 	char *p;
 
-	p = _strchr(str, ' = ');
+	p = _strchr(str, '=');
 	if (!p)
-	{
 		return (1);
-	}
-	unset_alias(info, str);
+	if (!*++p)
+		return (set_alias(info, str));
+
+	set_alias(info, str);
 	return (add_node_end(&(info->alias), str, 0) == NULL);
 }
