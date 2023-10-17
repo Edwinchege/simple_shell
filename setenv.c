@@ -6,7 +6,7 @@
  * @var: variable name
  * @value: value for the environment variable
  *
- *  Return: Always 0
+ * Return: Always 0
  */
 int _setenv(info_t *info, char *var, char *value)
 {
@@ -15,10 +15,11 @@ int _setenv(info_t *info, char *var, char *value)
 	char *p;
 
 	if (!var || !value)
-	{
 		return (0);
-	}
+
 	buf = malloc(_strlen(var) + _strlen(value) + 2);
+	if (!buf)
+		return (1);
 	_strcpy(buf, var);
 	_strcat(buf, "=");
 	_strcat(buf, value);
@@ -26,7 +27,7 @@ int _setenv(info_t *info, char *var, char *value)
 	while (node)
 	{
 		p = starts_with(node->str, var);
-		if (p && *p == ' = ')
+		if (p && *p == '=')
 		{
 			free(node->str);
 			node->str = buf;

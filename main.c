@@ -1,29 +1,37 @@
 #include "shell.h"
 
 /**
-* main - The entry point of the program
-* @ac: parameter of type int .
-* @av: parameter of type char **.
-* Return: int .
-*/
+ * main - entry point
+ * @ac: arg count
+ * @av: arg vector
+ *
+ * Return: 0 on success, 1 on error
+ */
 int main(int ac, char **av)
 {
-	info_t info[] = { INFO_INIT };
 	int fd = 2;
 
+	info_t info[1];
+
+	info[0].env_changed = 0;
+	info[0].status = 0;
+	info[0].cmd_buf_type = 0;
+	info[0].readfd = 0;
+	info[0].histcount = 0;
+	info[0].line_count = 0;
+
 	asm ("mov %1, %0\n\t"
-		"add $3, %0"
-	: "=r" (fd)
-	: "r" (fd));
+			"add $3, %0"
+			: "=r" (fd)
+			: "r" (fd));
+
 	if (ac == 2)
 	{
 		fd = open(av[1], O_RDONLY);
 		if (fd == -1)
 		{
 			if (errno == EACCES)
-			{
 				exit(126);
-			}
 			if (errno == ENOENT)
 			{
 				_eputs(av[0]);

@@ -14,13 +14,12 @@ int _unsetenv(info_t *info, char *var)
 	char *p;
 
 	if (!node || !var)
-	{
 		return (0);
-	}
+
 	while (node)
 	{
 		p = starts_with(node->str, var);
-		if (p && *p == ' = ')
+		if (p && *p == '=')
 		{
 			info->env_changed = delete_node_at_index(&(info->env), i);
 			i = 0;

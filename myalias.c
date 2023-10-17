@@ -4,7 +4,7 @@
  * _myalias - manages aliases
  * @info: address to the structure
  *
- *  Return: Always 0
+ * Return: Always 0
  */
 int _myalias(info_t *info)
 {
@@ -24,15 +24,12 @@ int _myalias(info_t *info)
 	}
 	for (i = 1; info->argv[i]; i++)
 	{
-		p = _strchr(info->argv[i], ' = ');
+		p = _strchr(info->argv[i], '=');
 		if (p)
-		{
 			set_alias(info, info->argv[i]);
-		}
 		else
-		{
-			print_alias(node_starts_with(info->alias, info->argv[i], ' = '));
-		}
+			print_alias(node_starts_with(info->alias, info->argv[i], '='));
 	}
+
 	return (0);
 }
