@@ -42,56 +42,55 @@ typedef struct liststr
 } list_t;
 
 /**
- *struct passinfo - contains info and context to execute commands
- *@arg: pointer to a single argument
- *@argv: pointer to an array of arguments
- *@path: pointer to the file path
- *@argc: number of arguments
- *@line_count: a line count
- *@err_num: error numbers or code for exit()s
- *@linecount_flag: flag for line count
- *@fname: pointer to the filename
- *@env: linked list local copy of environ
- *@environ: custom modified copy of environ from LL env
- *@history: pointer to command history
- *@alias: pointer to command aliases
- *@env_changed: flag to indicate changes in environment
- *@status: result or status of the command execution
- *@cmd_buf: pointer to a chain of commands or command buffers
- *@cmd_buf_type: type of command buffer
- *@readfd: file descriptor from which to read line input
- *@histcount: stores the command history count
+ * struct passinfo - contains info and context to execute commands
+ * @arg: pointer to a single argument
+ * @argv: pointer to an array of arguments
+ * @path: pointer to the file path
+ * @argc: number of arguments
+ * @line_count: a line count
+ * @err_num: error numbers or code for exit()s
+ * @linecount_flag: flag for line count
+ * @fname: pointer to the filename
+ * @env: linked list local copy of environ
+ * @environ: custom modified copy of environ from LL env
+ * @history: pointer to command history
+ * @alias: pointer to command aliases
+ * @env_changed: flag to indicate changes in environment
+ * @status: result or status of the command execution
+ * @cmd_buf: pointer to a chain of commands or command buffers
+ * @cmd_buf_type: type of command buffer
+ * @readfd: file descriptor from which to read line input
+ * @histcount: stores the command history count
  */
 typedef struct passinfo
 {
 	char *arg;
 	char **argv;
 	char *path;
-    char *fname;
-    char **environ;
-    char **cmd_buf;
+	char *fname;
+	char **environ;
+	char **cmd_buf;
 	int argc;
-    int env_changed;
+	int env_changed;
 	int status;
 	int cmd_buf_type;
 	int readfd;
 	int histcount;
 	int err_num;
 	int linecount_flag;
-    unsigned int line_count;
+	unsigned int line_count;
 	list_t *env;
 	list_t *history;
 	list_t *alias;
 } info_t;
 
-#define INFO_INIT \
-{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
-	0, 0, 0}
+#define INFO_INIT (NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL,\
+		0, 0, NULL, 0, 0, 0)
 
 /**
- *struct builtin - creates built-in function
- *@type: type of the built-in function
- *@func: pointer to the function
+ * struct builtin - creates built-in function
+ * @type: type of the built-in function
+ * @func: pointer to the function
  */
 typedef struct builtin
 {
@@ -136,9 +135,6 @@ int _atoi(char *);
 int _erratoi(char *);
 void print_error(info_t *, char *);
 int print_d(int, int);
-int print_alias(list_t *node);
-int set_alias(info_t *info, char *str);
-int unset_alias(info_t *info, char *str);
 char *convert_number(long int, int, int);
 void remove_comments(char *);
 int _myexit(info_t *);
@@ -174,9 +170,12 @@ size_t list_len(const list_t *);
 char **list_to_strings(list_t *);
 size_t print_list(const list_t *);
 list_t *node_starts_with(list_t *, char *, char);
-ssize_t get_node_index(list_t *, list_t *);
+int unset_alias(info_t *info, char *str);
+int set_alias(info_t *info, char *str);
+int print_alias(list_t *node);
 ssize_t read_buf(info_t *info, char *buf, size_t *i);
 ssize_t input_buf(info_t *info, char **buf, size_t *len);
+ssize_t get_node_index(list_t *, list_t *);
 int is_chain(info_t *, char *, size_t *);
 void check_chain(info_t *, char *, size_t *, size_t, size_t);
 int replace_alias(info_t *);
